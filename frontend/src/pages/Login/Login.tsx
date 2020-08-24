@@ -17,6 +17,7 @@ import LoginDiv from './Login.styling';
 import queryString from 'query-string';
 import { UserContext } from '../../UserContext';
 import logo from '../../assets/lodgel.jpg';
+import Button from '../../components/Button';
 
 interface LoginProps extends RouteComponentProps {
   onUser: any;
@@ -58,12 +59,13 @@ const Login: FunctionComponent<LoginProps> = ({ history, location }) => {
     observer.current = app
       .auth()
       .onAuthStateChanged((newUser) => setUser(newUser));
+
     return () => {
       if (observer.current !== null) {
         observer.current();
       }
     };
-  }, []);
+  }, [observer]);
 
   useEffect(() => {
     // Listens to changes in userState and submits them
@@ -74,6 +76,8 @@ const Login: FunctionComponent<LoginProps> = ({ history, location }) => {
   async function submitUser() {
     /* Commits user to the backend and redirects new users to
     either a page gathering additional information or their dashboard*/
+    console.log('SUBMIT USER FIRED');
+    console.log(user);
     if (user !== null) {
       const { email, uid, displayName, photoURL } = user;
       const nUser = {
@@ -84,11 +88,11 @@ const Login: FunctionComponent<LoginProps> = ({ history, location }) => {
         role: ast ? 'assistant' : 'manager',
         managerID: manager,
       };
-      const url =
-        process.env.REACT_APP_backendURL ||
-        'https://labs10-cleaner-app-2.herokuapp.com';
+      console.log('NUSER', nUser);
+      const url = process.env.REACT_APP_backendURL || 'http://localhost:54321';
       try {
         const { data } = await axios.post(`${url}/users/`, nUser);
+        console.log('After post!!!!!', data);
         localStorage.setItem('token', data.token);
         localStorage.setItem('role', data.role);
         localStorage.setItem('subscription', data.stripePlan);
@@ -106,9 +110,45 @@ const Login: FunctionComponent<LoginProps> = ({ history, location }) => {
     }
   }
 
+  /////Test Login Code Here!!!//////////
+  const managerPreset = {
+    email: 'test@test.com',
+    ext_it: 'd7DXFYsNwTUKFAz3acyeUkMmtYQ2',
+    full_name: 'Nando Theeßen',
+    photoURL: null,
+    role: 'manager',
+    managerID: 16,
+  };
+  // @ts-ignore
+  const LogAsTest = async (testUser) => {
+    const url = process.env.REACT_APP_backendURL || 'http://localhost:54321';
+    try {
+      const { data } = await axios.post(`${url}/users/`, testUser);
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('role', data.role);
+      localStorage.setItem('subscription', data.stripePlan);
+      history.push('/properties');
+    } catch (e) {
+      throw e;
+    }
+  };
+
   return (
     <Container>
       <LoginDiv>
+        <div className='test-login-container'>
+          <h1>
+            To Test Functionality Please Use These Preset Users To Save Some
+            Time
+          </h1>
+          <Button
+            text='Sign in as Manager'
+            onClick={() => LogAsTest(managerPreset)}
+          />
+          <Button disabled={true} text='Sign in as Assistant' />
+          <Button disabled={true} text='Sign in as Guest' />
+        </div>
         <div className='login-container'>
           <img
             src={logo}

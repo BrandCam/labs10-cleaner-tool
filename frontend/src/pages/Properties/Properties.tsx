@@ -32,10 +32,9 @@ import defaultHouse from '../../assets/house_alt.jpg';
 
 const Properties = () => {
   // @ts-ignore
+
   const { state, dispatch } = useContext(UserContext);
-  const url =
-    process.env.REACT_APP_backendURL ||
-    'https://labs10-cleaner-app-2.herokuapp.com';
+  const url = process.env.REACT_APP_backendURL || 'http://localhost:54321';
   /* Axios calls to fetch / update properties */
   const [houses, error, loading] = useFetch(`${url}/houses`);
   const { token, role, subscription } = state;

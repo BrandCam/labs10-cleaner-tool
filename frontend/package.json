@@ -25,6 +25,7 @@
     "@uppy/core": "^0.29.1",
     "@uppy/react": "^0.29.1",
     "axios": "^0.18.0",
+    "dotenv": "^8.2.0",
     "firebase": "^5.8.3",
     "formik": "^1.4.2",
     "jest-dom": "^3.0.0",

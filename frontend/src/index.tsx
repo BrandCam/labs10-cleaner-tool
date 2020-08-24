@@ -9,7 +9,7 @@ import WebFont from 'webfontloader';
 import JssProvider from 'react-jss/lib/JssProvider';
 import { create, JSS } from 'jss';
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles';
-
+import dotenv from 'dotenv';
 const generateClassName = createGenerateClassName();
 const insertionPoint = document.getElementById('jss-insertion-point');
 let jss: JSS | undefined;

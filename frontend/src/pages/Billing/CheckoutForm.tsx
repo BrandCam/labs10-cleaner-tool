@@ -10,9 +10,7 @@ import { BillingContext } from './Billing';
 import loadingIndicator from '../utils/loading.svg';
 import { UserContext } from '../../UserContext';
 
-const url =
-  process.env.REACT_APP_backendURL ||
-  'https://labs10-cleaner-app-2.herokuapp.com';
+const url = process.env.REACT_APP_backendURL || 'http://localhost:54321';
 
 const headers: AxiosRequestConfig = {
   headers: { Authorization: localStorage.getItem('token') },
